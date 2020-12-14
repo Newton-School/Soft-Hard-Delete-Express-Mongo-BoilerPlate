@@ -1,19 +1,13 @@
-const express = require('express')
-const app = express()
-const bodyParser = require("body-parser");
-const port = 3000
-app.use(express.urlencoded());
-
-// Parse JSON bodies (as sent by API clients)
-app.use(express.json());
+const app = require('./app');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
 
-app.use(bodyParser.urlencoded({ extended: false }))
+dotenv.config();
+//connect to DB
+mongoose.connect(process.env.DATABASE_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    console.log('connected to DB')
+})
 
-app.use(bodyParser.json())
-// your code goes here
 
-
-app.listen(port, () => console.log(`App listening on port ${port}!`))
-
-module.exports = app;
+app.listen(3000, () => console.log('Server running......'));
